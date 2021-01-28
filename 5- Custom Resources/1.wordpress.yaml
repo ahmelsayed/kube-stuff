@@ -1,0 +1,26 @@
+apiVersion: wordpress.presslabs.org/v1alpha1
+kind: Wordpress
+metadata:
+  name: myblog
+spec:
+  replicas: 3
+  plugins:
+    git:
+      repository: https://github.com/example.com
+  media:
+    gcs:
+      bucket: calins-wordpress-runtime-playground
+      prefix: mysite/
+      env:
+        - name: GOOGLE_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              name: mysite
+              key: google_application_credentials.json
+        - name: GOOGLE_PROJECT_ID
+          value: development
+  theme: midnight
+  database:
+    name: myblog-db
+    type: mysql
+    size: 1G

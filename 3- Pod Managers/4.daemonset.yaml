@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: pod-as-daemonset
+spec:
+  selector:
+    matchLabels:
+      podLabel: pod-as-daemonset
+  template:
+    metadata:
+      labels:
+        podLabel: pod-as-daemonset
+    spec:
+      containers:
+      - name: http
+        image: mcr.microsoft.com/azure-functions/dotnet:3.0
+        ports:
+        - containerPort: 80
+        env:
+          - name: MY_ENV_VAR
+            value: MY_VALUE

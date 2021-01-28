@@ -1,0 +1,42 @@
+apiVersion: k8se.microsoft.com/v1alpha1
+kind: App
+metadata:
+  name: my-app
+  namespace: k8se-apps
+spec:
+  appType: webapp
+  code:
+    packageRef:
+      framework: NODE|12-lts
+      buildMetadata: c2Rqa2Zoc2tkamZoanNkaGZrc2RoZmprYXNka2poYXNramRoYXM=
+  httpOptions:
+    port: 80
+    httpsOnly: true
+    clientAffinity: false
+    ipRestrictionRules:
+      - name: country-block
+        ipAddress: 176.235.0.0/24
+    corsPolicy:
+      allowedOrigins: ["*"]
+      allowCredentials: false
+    hostNames:
+      - domain: app.com
+        certificateRef:
+          name: app.com.tls
+      - domain: '*.app.com'
+        certificateRef:
+          name: wildcard.app.com.tls
+  config:
+    appSettingsRef:
+      name: my-app-settings
+  scaleOptions:
+    minReplicaCount: 2
+    maxReplicaCount: 5
+  triggerOptions:
+    pollingInterval: 300
+    cooldownPeriod: 100
+    triggers:
+      - type: azure-queue
+        metadata:
+          queueName: 'workitems'
+          connectionFromEnv: 'AzureStorageConnectionString'

@@ -1,0 +1,15 @@
+apiVersion: k8se.microsoft.com/v1alpha1
+kind: App
+metadata:
+  name: my-node-app-3
+  namespace: k8se-apps
+spec:
+  appType: webapp
+  code:
+    containers:
+    - name: http
+      image: appsvc/node:14-lts_20200522.6
+  httpOptions:
+    port: 8080
+    corsPolicy:
+      allowedOrigins: ["*"]

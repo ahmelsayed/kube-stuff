@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pod-as-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: curl
+        image: tutum/curl:latest
+        command: ["curl",  "http://azure.com", "-v"]
+      restartPolicy: Never

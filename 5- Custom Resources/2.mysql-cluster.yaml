@@ -1,0 +1,21 @@
+apiVersion: crunchydata.com/v1
+kind: Mysql
+metadata:
+  name: my-db
+spec:
+  BackrestStorage:
+    accessmode: ReadWriteOnce
+    size: 1G
+  PrimaryStorage:
+    accessmode: ReadWriteOnce
+    size: 1G
+    storagetype: dynamic
+  ReplicaStorage:
+    accessmode: ReadWriteOnce
+    size: 1G
+  ccpimage: crunchy-mysql-ha
+  database: hippo
+  exporterport: "9187"
+  policies: ""
+  port: "5432"
+  user: hippo

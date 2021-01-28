@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: test-deployment
+  template:
+    metadata:
+      labels:
+        app: test-deployment
+    spec:
+      containers:
+      - name: http
+        image: mcr.microsoft.com/azure-functions/dotnet:3.0
+        ports:
+        - containerPort: 80
+        env:
+        - name: ENV_FROM_DEPLOYMENT
+          value: value1
+        envFrom:
+        - configMapRef:
+            name: myconfigmap
+        - secretRef:
+            name: mysecret

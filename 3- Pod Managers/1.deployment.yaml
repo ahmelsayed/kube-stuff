@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-as-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      podLabel: pod-as-deployment
+  template:
+    metadata:
+      labels:
+        podLabel: pod-as-deployment
+    spec:
+      containers:
+      - name: http
+        image: mcr.microsoft.com/azure-functions/dotnet:3.0
+        ports:
+        - containerPort: 80
+        env:
+          - name: MY_ENV_VAR
+            value: MY_VALUE2

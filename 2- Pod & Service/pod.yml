@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-service
+  labels:
+    podLabel: pod-with-service
+spec:
+  containers:
+  - image:  mcr.microsoft.com/azure-functions/dotnet:3.0
+    name:  http
+    ports:
+    - containerPort: 80
+    env:
+      - name: MY_ENV_VAR
+        value: MY_VALUE
